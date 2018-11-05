@@ -12,9 +12,11 @@ describe Movie do
   describe "relations" do
     it "has many customers" do
       harry.must_respond_to :customers
+
       harry.customers.each do |customer|
         customer.must_be_kind_of Customer
       end
+      expect(harry.customers.count).must_equal 2
     end
 
     it "has many rentals" do

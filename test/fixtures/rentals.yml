@@ -2,18 +2,18 @@
 
 rent1:
   due_date: 2018-11-05
-  customer_id: Amanda
-  movie_id: movie1
+  customer: Amanda
+  movie: movie1
   checkout_date: 2018-11-05
 
 rent2:
   due_date: 2018-11-05
-  customer_id: Amanda
-  movie_id: movie2
+  customer: Amanda
+  movie: movie2
   checkout_date: 2018-11-05
 
 rent3:
   due_date: 2018-11-05
-  customer_id: Dani
-  movie_id: movie2
+  customer: Dani
+  movie: movie2
   checkout_date: 2018-11-05
