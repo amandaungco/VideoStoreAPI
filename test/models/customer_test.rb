@@ -11,7 +11,6 @@ describe Customer do
   describe "relations" do
     it "has many customers" do
       amanda.must_respond_to :movies
-      binding.pry
       amanda.movies.each do |movie|
         movie.must_be_kind_of Movie
       end
@@ -25,13 +24,14 @@ describe Customer do
     end
 
     it "can have no rentals" do
-      amanda.rentals.destroy_all!
+      amanda.rentals.destroy_all
       amanda.must_respond_to :rentals
       expect(amanda.rentals).must_equal []
     end
 
     it "can have no movies" do
-      amanda.rentals.destroy_all!
+      amanda.rentals.destroy_all
+      binding.pry
       amanda.must_respond_to :movies
       expect(amanda.movies).must_equal []
     end
