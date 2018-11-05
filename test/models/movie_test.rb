@@ -6,7 +6,7 @@ describe Movie do
   let(:norents_movie) { movies(:movie3)}
 
   it "must be valid" do
-    expect(movie).must_be :valid?
+    expect(harry).must_be :valid?
   end
 
   describe "relations" do
@@ -36,6 +36,53 @@ describe Movie do
       expect(norents_movie.customers).must_equal []
     end
 
+
+  end
+
+  describe "Validations" do
+    it 'must have title' do
+      harry.title = nil
+      harry.save
+
+      valid = harry.valid?
+
+      expect(valid).must_equal false
+      expect(harry.errors.messages[:title]).must_equal ["can't be blank"]
+    end
+
+    it 'must have overview' do
+      harry.overview = nil
+      harry.save
+
+      valid = harry.valid?
+
+      expect(valid).must_equal false
+      expect(harry.errors.messages[:overview]).must_equal ["can't be blank"]
+    end
+
+    it 'must have release_date' do
+      harry.release_date = nil
+      harry.save
+
+      valid = harry.valid?
+
+      expect(valid).must_equal false
+      expect(harry.errors.messages[:release_date]).must_equal ["can't be blank"]
+    end
+
+    it 'must have valid inventory' do
+      invalid_inv = [nil, 1.0, 0, "string"]
+
+      invalid_inv.each do |value|
+        harry.inventory = value
+        harry.save
+
+        valid = harry.valid?
+        expect(valid).must_equal false
+        valid_errors = [["is not a number"],["must be an integer"],["must be greater than 0"]]
+        expect(valid_errors).must_include harry.errors.messages[:inventory]
+      end
+    end
 
   end
 end
