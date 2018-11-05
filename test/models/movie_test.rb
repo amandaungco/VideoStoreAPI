@@ -30,6 +30,8 @@ describe Movie do
     end
 
     it "can have no customers" do
+      norents_movie.must_respond_to :customers
+      expect(norents_movie.customers).must_equal []
     end
 
 
