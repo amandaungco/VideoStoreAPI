@@ -25,7 +25,7 @@ class MoviesController < ApplicationController
     else
       render json: {
         errors: {
-          title: ["Could not create Movie"]
+          title: ["Could not create '#{movie_params[:title]}' Movie"]
         },
         message: movie.errors.messages
       }, status: :bad_request

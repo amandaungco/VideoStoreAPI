@@ -1,7 +1,6 @@
 require "test_helper"
 #Validate only those fields that, if they are absent, will break your API.
 describe Movie do
-  let(:movie) { Movie.new }
   let(:harry) { movies(:movie2)}
   let(:norents_movie) { movies(:movie3)}
 
@@ -40,6 +39,21 @@ describe Movie do
   end
 
   describe "Validations" do
+    let(:mock_hash) {
+      {
+        movie: {
+          title: "Harry Potter & the Sorcerer Stone",
+          release_date: "1990-10-23",
+          overview: "The most enchanting athletic event in history",
+          inventory: 4
+        }
+      }
+    }
+    it 'will save movie with valid params' do
+
+
+    end
+
     it 'must have title' do
       harry.title = nil
       harry.save
@@ -48,6 +62,17 @@ describe Movie do
 
       expect(valid).must_equal false
       expect(harry.errors.messages[:title]).must_equal ["can't be blank"]
+    end
+
+    it 'must have unique title' do
+
+      norents_movie.title = harry.title
+      norents_movie.save
+
+      valid = norents_movie.valid?
+
+      expect(valid).must_equal false
+      expect(norents_movie.errors.messages[:title]).must_equal ["has already been taken"]
     end
 
     it 'must have overview' do
