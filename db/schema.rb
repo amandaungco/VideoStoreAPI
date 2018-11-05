@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_05_191516) do
+ActiveRecord::Schema.define(version: 2018_11_05_192528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2018_11_05_191516) do
     t.string "state"
     t.integer "postal_code"
     t.string "phone"
-    t.datetime "created_at", null: false
+    t.datetime "registered_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "movie_id"
     t.index ["movie_id"], name: "index_customers_on_movie_id"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2018_11_05_191516) do
     t.string "overview"
     t.date "release_date"
     t.integer "inventory"
-    t.datetime "registered_at", null: false
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "customer_id"
     t.index ["customer_id"], name: "index_movies_on_customer_id"
