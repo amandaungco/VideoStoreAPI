@@ -7,6 +7,7 @@ Amanda:
   state: NY
   postal_code: 12345
   phone: 914-908-9090
+  registered_at: 2018-01-05
 
 Dani:
   name: Dani
@@ -15,3 +16,4 @@ Dani:
   state: Colorado
   postal_code: 98765
   phone: 134-212-2312
+  registered_at: 2018-01-05

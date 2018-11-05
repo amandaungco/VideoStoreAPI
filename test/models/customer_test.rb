@@ -1,4 +1,5 @@
 require "test_helper"
+#Validate only those fields that, if they are absent, will break your API.
 
 describe Customer do
   let(:amanda) { customers(:Amanda)}

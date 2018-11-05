@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
+movie1:
+  title: Harry Potter & the Sorcerer Stone
   overview: MyString
   release_date: 2018-11-05
   inventory: 1
 
-two:
-  title: MyString
+
+
+movie2:
+  title: Harry Potter and the Chamber of Secrets
   overview: MyString
-  release_date: 2018-11-05
-  inventory: 1
+  release_date: 2018-12-05
+  inventory: 4
