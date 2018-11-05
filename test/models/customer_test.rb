@@ -25,13 +25,13 @@ describe Customer do
     end
 
     it "can have no rentals" do
-      amanda.rentals.destroy_all
+      amanda.rentals.destroy_all!
       amanda.must_respond_to :rentals
       expect(amanda.rentals).must_equal []
     end
 
     it "can have no movies" do
-      amanda.rentals.destroy_all
+      amanda.rentals.destroy_all!
       amanda.must_respond_to :movies
       expect(amanda.movies).must_equal []
     end
