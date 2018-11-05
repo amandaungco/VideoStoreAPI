@@ -13,3 +13,9 @@ movie2:
   overview: MyString
   release_date: 2018-12-05
   inventory: 4
+
+movie3:
+  title: Harry Potter and the Prisoner of Azkaban
+  overview: MyString
+  release_date: 2018-12-05
+  inventory: 2
