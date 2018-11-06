@@ -20,6 +20,7 @@ class MoviesController < ApplicationController
 
   def create
     movie = Movie.new(movie_params)
+    
     if movie.save
       render json: { id: movie.id }, status:  :ok
     else

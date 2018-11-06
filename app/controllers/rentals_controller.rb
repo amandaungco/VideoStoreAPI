@@ -8,9 +8,16 @@ class RentalsController < ApplicationController
       rental = Rental.new(rental_params)
       rental.due_date = Date.today + 7
       rental.checkout_date = Date.today
-      rental.save
-      @movie.check_out_movie
-      render json: { id: rental.id }, status: :ok 
+      if rental.save
+        @movie.check_out_movie
+        render json: { id: rental.id }, status: :ok
+      else
+        render json: { errors: {
+          title: ["ERROR: #{@movie.title} was not checked_out"]
+        }
+      },
+        status: :bad_request
+      end
     else
       render json: { errors: {
         title: ["Movie #{@movie.title} not available"]
@@ -34,7 +41,12 @@ class RentalsController < ApplicationController
       @rental.checkin_date = Date.today
       @rental.save
       @rental.movie.check_in_movie
+      render json: { message: "#{@rental.movie.title} checked in",
+      id: @rental.id
+    },
+      status: :ok
     end
+
   end
 
 
