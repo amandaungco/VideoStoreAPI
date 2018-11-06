@@ -10,6 +10,7 @@ class RentalsController < ApplicationController
       rental.checkout_date = Date.today
       if rental.save
         @movie.check_out_movie
+        @customer.check_out_movie
         render json: { id: rental.id }, status: :ok
       else
         render json: { errors: {
@@ -41,6 +42,7 @@ class RentalsController < ApplicationController
       @rental.checkin_date = Date.today
       @rental.save
       @rental.movie.check_in_movie
+      @rental.customer.check_in_movie
       render json: { message: "#{@rental.movie.title} checked in",
       id: @rental.id
     },
