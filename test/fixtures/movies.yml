@@ -5,6 +5,7 @@ movie1:
   overview: MyString
   release_date: 2018-11-05
   inventory: 1
+  available_inventory: 1
 
 
 
@@ -13,9 +14,11 @@ movie2:
   overview: MyString
   release_date: 2018-12-05
   inventory: 4
+  available_inventory: 4
 
 movie3:
   title: Harry Potter and the Prisoner of Azkaban
   overview: MyString
   release_date: 2018-12-05
   inventory: 2
+  available_inventory: 0

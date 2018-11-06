@@ -99,7 +99,7 @@ describe Movie do
     end
 
     it 'must have valid inventory' do
-      invalid_inv = [nil, 1.0, 0, "string"]
+      invalid_inv = [nil, 1.0, -1, "string"]
 
       invalid_inv.each do |value|
         harry.inventory = value
@@ -107,7 +107,7 @@ describe Movie do
 
         valid = harry.valid?
         expect(valid).must_equal false
-        valid_errors = [["is not a number"],["must be an integer"],["must be greater than 0"]]
+        valid_errors = [["is not a number"],["must be an integer"],["must be greater than or equal to 0"]]
         expect(valid_errors).must_include harry.errors.messages[:inventory]
       end
     end
