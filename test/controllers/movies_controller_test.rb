@@ -66,8 +66,8 @@ describe MoviesController do
 
       # Assert that each
 
-        expect(movie.keys.sort).must_equal keys
-        expect(movie.keys.length).must_equal keys.length
+      expect(movie.keys.sort).must_equal keys
+      expect(movie.keys.length).must_equal keys.length
 
     end
 

@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
       status: :not_found
     else
       render json: @movie.as_json(except: [:created_at, :updated_at])
-    
+
     end
   end
 
@@ -35,7 +35,7 @@ class MoviesController < ApplicationController
   private
 
   def movie_params
-    params.require(:movie).permit(:title, :overview, :inventory, :release_date)
+    params.permit(:title, :overview, :inventory, :release_date)
   end
 
 end
