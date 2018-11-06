@@ -1,8 +1,8 @@
 class RentalsController < ApplicationController
   before_action :find_movie
   before_action :find_customer
-# find customer before check in
-# find movie before check in
+  before_action :find_rental, only: [:check_in]
+
   def check_out
     if @movie.available?
       rental = Rental.new(rental_params)
@@ -10,8 +10,7 @@ class RentalsController < ApplicationController
       rental.checkout_date = Date.today
       rental.save
       @movie.check_out_movie
-      @movie.save
-      #binding.pry
+      render json: { id: rental.id }, status: :ok 
     else
       render json: { errors: {
         title: ["Movie #{@movie.title} not available"]
@@ -25,11 +24,21 @@ class RentalsController < ApplicationController
 
 
   def check_in
-    #find rental isntance for customer_id and movie_id
-    #update rental instance
-    #check_in: today
-    #call inventory method for check in
+    if @rental.nil?
+      render json: { errors: {
+        title: ["Could not find rental"]
+      }
+    },
+      status: :bad_request
+    else
+      @rental.checkin_date = Date.today
+      @rental.save
+      @rental.movie.check_in_movie
+    end
   end
+
+
+
 
   private
 
@@ -42,7 +51,11 @@ class RentalsController < ApplicationController
   end
 
   def find_customer
-    @customer = Customer.find_by(id: params[:id])
+    @customer = Customer.find_by(id: rental_params[:customer_id])
+  end
+
+  def find_rental
+    @rental = Rental.find_by(customer_id: rental_params[:customer_id], movie_id: rental_params[:movie_id], checkin_date: nil)
   end
 
 

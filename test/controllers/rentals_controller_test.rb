@@ -13,9 +13,13 @@ describe RentalsController do
 
   describe "check_out" do
     it 'can create a new instance of rental' do
+      starting_inventory = harry.available_inventory
       expect {
         post check_out_path(mock_hash)
       }.must_change 'Rental.count', 1
+      harry.reload
+      expect(harry.available_inventory).must_equal starting_inventory - 1
+
       must_respond_with :success
     end
 
@@ -33,12 +37,13 @@ describe RentalsController do
       expect{
         post check_in_path(mock_hash)
       }.wont_change 'Rental.count'
+      expect(Rental.all.last.checkin_date).must_equal Date.today
       must_respond_with :success
     end
 
     it 'wont update an new instance of rental if its already been checkedin' do
-      post check_out_path(mock_hash)
-      post check_out_path(mock_hash) #try checking in again
+      post check_in_path(mock_hash)
+      post check_in_path(mock_hash) #try checking in again
       must_respond_with :bad_request
     end
   end
