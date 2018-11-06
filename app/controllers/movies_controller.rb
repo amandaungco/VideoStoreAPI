@@ -13,8 +13,8 @@ class MoviesController < ApplicationController
     },
       status: :not_found
     else
-      render json: {ok: true, movie: @movie.as_json(except: [:created_at, :updated_at])
-      }
+      render json: @movie.as_json(except: [:created_at, :updated_at])
+    
     end
   end
 

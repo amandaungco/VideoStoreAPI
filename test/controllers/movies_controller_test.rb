@@ -30,6 +30,22 @@ describe MoviesController do
       # Assert
       expect(body.length).must_equal Movie.count
     end
+
+    it "returns movies with exactly the required fields" do
+      keys = %w(id release_date title)
+
+      # Act
+      get movies_path
+
+      # Convert the JSON response into a Hash
+      body = JSON.parse(response.body)
+
+      # Assert that each
+      body.each do |movie|
+        expect(movie.keys.sort).must_equal keys
+        expect(movie.keys.length).must_equal keys.length
+      end
+    end
   end
 
   describe "show" do
@@ -38,6 +54,23 @@ describe MoviesController do
       must_respond_with :success
       #maybe add checks for specific returned values
     end
+
+    it "returns movies with exactly the required fields" do
+      keys = %w(id inventory overview release_date title)
+
+      # Act
+      get movie_path(harry.id)
+
+      # Convert the JSON response into a Hash
+      movie = JSON.parse(response.body)
+
+      # Assert that each
+
+        expect(movie.keys.sort).must_equal keys
+        expect(movie.keys.length).must_equal keys.length
+
+    end
+
   end
 
   describe "Create" do
@@ -60,21 +93,7 @@ describe MoviesController do
 
 
 
-# it "returns pets with exactly the required fields" do
-#   keys = %w(age human id name)
-#
-#   # Act
-#   get pets_path
-#
-#   # Convert the JSON response into a Hash
-#   body = JSON.parse(response.body)
-#
-#   # Assert that each
-#   body.each do |pet|
-#     expect(pet.keys.sort).must_equal keys
-#     expect(pet.keys.length).must_equal keys.length
-#   end
-# end
+
 
 
 end
