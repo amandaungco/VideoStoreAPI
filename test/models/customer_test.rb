@@ -31,6 +31,7 @@ describe Customer do
 
     it "can have no movies" do
       amanda.rentals.destroy_all
+    
       amanda.must_respond_to :movies
       expect(amanda.movies).must_equal []
     end
