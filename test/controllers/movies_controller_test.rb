@@ -56,7 +56,7 @@ describe MoviesController do
     end
 
     it "returns movies with exactly the required fields" do
-      keys = %w(id inventory overview release_date title)
+      keys = %w(available_inventory id inventory overview release_date title)
 
       # Act
       get movie_path(harry.id)
@@ -71,22 +71,35 @@ describe MoviesController do
 
     end
 
+    it "will return status not_found for invalid movie" do
+
+      get movie_path(-1)
+      must_respond_with :not_found
+      #maybe add checks for specific returned values
+    end
+
   end
 
   describe "Create" do
-    # let(:mock_hash) { movie:
-    #    {
-    #   title: "Harry Potter and the GOF",
-    #   release_date: "1990-10-23",
-    #   overview: "The most enchanting athletic event in history",
-    #   inventory: 4
-    #  }
-    # }
-    #
-    # it "will create a new movie with valid data" do
-    #   post movies_path(mock_hash)
-    #   must_respond_with :success
-    # end
+    let(:mock_hash) {
+       {
+      title: "Harry Potter and the GOF",
+      release_date: "1990-10-23",
+      overview: "The most enchanting athletic event in history",
+      inventory: 4
+     }
+    }
+
+    it "will create a new movie with valid data" do
+      post movies_path(mock_hash)
+      must_respond_with :success
+    end
+
+    it "will not create a new movie with invalid params" do
+      mock_hash[:title] = nil
+      post movies_path(mock_hash)
+      must_respond_with :bad_request
+    end
   end
 
 

@@ -41,16 +41,19 @@ describe Movie do
   describe "Validations" do
     let(:mock_hash) {
       {
-        movie: {
-          title: "Harry Potter & the Sorcerer Stone",
+          title: "Harry Potter & the Sorcerer Stone2",
           release_date: "1990-10-23",
           overview: "The most enchanting athletic event in history",
           inventory: 4
-        }
       }
     }
     it 'will save movie with valid params' do
+      movie = Movie.new(mock_hash)
+      movie.save
 
+      valid = movie.valid?
+
+      expect(valid).must_equal true
 
     end
 
