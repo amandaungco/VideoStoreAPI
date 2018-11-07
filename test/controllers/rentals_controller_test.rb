@@ -18,7 +18,6 @@ describe RentalsController do
       expect {
         post check_out_path(mock_hash)
       }.must_change 'Rental.count', 1
-      binding.pry
       harry.reload
       expect(harry.available_inventory).must_equal starting_inventory - 1
       body = JSON.parse(response.body)
@@ -101,7 +100,8 @@ describe RentalsController do
       valid_sort.each do |sortby|
         get overdue_path, params: { sort: sortby }
         body = JSON.parse(response.body)
-        new_list = Rental.all.sort_by{ |movie| movie[sortby] }
+        rentals = Rental.where("checkin_date = ? AND due_date < ?", Date.new(0), Date.today)
+        new_list = rentals.sort_by{ |rental| rental[sortby] }
         expect(body[0]["id"]).must_equal new_list[0].id
         expect(body[-1]["id"]).must_equal new_list[-1].id
         must_respond_with :success

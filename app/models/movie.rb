@@ -10,20 +10,6 @@ class Movie < ApplicationRecord
   def available_inventory
     return (self.inventory) - (self.rentals.where(checkin_date: Date.new(0)).length)
   end
-  # #
-  # # def check_out_movie
-  # #   self.available_inventory -= 1
-  # #   self.save
-  # # end
-  # #
-  # # def check_in_movie
-  # #   self.available_inventory += 1
-  # #   self.save
-  # #   if self.available_inventory > self.inventory
-  # #     render
-  # #   end
-  #
-  # end
 
   def available?
     return self.available_inventory > 0
