@@ -1,7 +1,21 @@
 class MoviesController < ApplicationController
   def index
     movies = Movie.all
-    render json: movies.as_json( only: [:id, :title, :release_date])
+    if movie_params[:sort]
+      if ['title', 'release_date'].include?(movie_params[:sort])
+        movies = movies.sort_by{ |movie| movie[movie_params[:sort]] }
+        render json: movies.as_json( only: [:id, :title, :release_date])
+
+      else
+        render json: { errors: {
+          title: ["Movies cannot be sorted by #{movie_params[:sort]}"]
+        }
+      },
+      status: :bad_request
+      end
+    else
+      render json: movies.as_json( only: [:id, :title, :release_date])
+    end
   end
 
   def show
@@ -11,24 +25,24 @@ class MoviesController < ApplicationController
         title: ["Movie #{params[:id]} not found"]
       }
     },
-      status: :not_found
-    else
-      render json: @movie.as_json(methods: :available_inventory, except: [:created_at, :updated_at])
+    status: :not_found
+  else
+    render json: @movie.as_json(methods: :available_inventory, except: [:created_at, :updated_at])
 
-    end
   end
+end
 
-  def create
-    movie = Movie.new(movie_params)
+def create
+  movie = Movie.new(movie_params)
 
-    if movie.save
-      render json: { id: movie.id }, status:  :ok
-    else
-      render json: {
-        errors: {
-          title: ["Could not create '#{movie_params[:title]}' Movie"]
-        },
-        message: movie.errors.messages
+  if movie.save
+    render json: { id: movie.id }, status:  :ok
+  else
+    render json: {
+      errors: {
+        title: ["Could not create '#{movie_params[:title]}' Movie"]
+      },
+      message: movie.errors.messages
       }, status: :bad_request
     end
   end
@@ -36,7 +50,7 @@ class MoviesController < ApplicationController
   private
 
   def movie_params
-    params.permit(:title, :overview, :inventory, :release_date)
+    params.permit(:title, :overview, :inventory, :release_date, :sort, :n, :p)
   end
 
 end

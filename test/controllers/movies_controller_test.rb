@@ -46,6 +46,31 @@ describe MoviesController do
         expect(movie.keys.length).must_equal keys.length
       end
     end
+
+    it 'will sort with valid parameter' do
+      valid_sort = %w(title release_date)
+
+      valid_sort.each do |sortby|
+        get movies_path, params: { sort: sortby }
+        body = JSON.parse(response.body)
+        new_list = Movie.all.sort_by{ |movie| movie[sortby] }
+        expect(body[0]["id"]).must_equal new_list[0].id
+        expect(body[-1]["id"]).must_equal new_list[-1].id
+        must_respond_with :success
+      end
+
+    end
+
+    it 'will not sort for invalid parameter' do
+      invalid_sort = %w(city dog nil)
+
+      invalid_sort.each do |sortby|
+        get movies_path, params: { sort: sortby }
+        body = JSON.parse(response.body)
+        expect(body).must_include "errors"
+        must_respond_with :bad_request
+      end
+    end
   end
 
   describe "show" do

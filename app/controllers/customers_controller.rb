@@ -11,7 +11,7 @@ class CustomersController < ApplicationController
           title: ["Customers cannot be sorted by #{customer_params[:sort]}"]
         }
       },
-      status: :not_found
+      status: :bad_request
     end
   else
 
