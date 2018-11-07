@@ -8,7 +8,7 @@ Amanda:
   postal_code: 12345
   phone: 914-908-9090
   registered_at: 2018-01-05
-  movies_checked_out_count: 3
+
 
 Dani:
   name: Dani
@@ -18,4 +18,3 @@ Dani:
   postal_code: 98765
   phone: 134-212-2312
   registered_at: 2018-01-05
-  movies_checked_out_count: 0

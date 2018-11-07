@@ -40,19 +40,7 @@ describe Customer do
   end
 
   describe 'custom methods' do
-    it 'adds a count to a custome movies_checked_out_count when a movie is checked out' do
-      starting_count = amanda.movies_checked_out_count
-      amanda.check_out_movie
-      amanda.reload
-      expect(amanda.movies_checked_out_count).must_equal starting_count + 1
-    end
-
-    it 'removes a count from a customer movies_checked_out_count when a movie is checked in' do
-      starting_count = amanda.movies_checked_out_count
-      amanda.check_in_movie
-      amanda.reload
-      expect(amanda.movies_checked_out_count).must_equal starting_count - 1
-    end
+  
 
   end
 end

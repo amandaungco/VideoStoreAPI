@@ -14,9 +14,11 @@ describe RentalsController do
   describe "check_out" do
     it 'can create a new instance of rental given valid data' do
       starting_inventory = harry.available_inventory
+            binding.pry
       expect {
         post check_out_path(mock_hash)
       }.must_change 'Rental.count', 1
+
       harry.reload
       expect(harry.available_inventory).must_equal starting_inventory - 1
       body = JSON.parse(response.body)
@@ -46,8 +48,8 @@ describe RentalsController do
     end
 
     it 'wont create a new instance of rental if theres not enough inventory' do
-      harry.available_inventory = 0
-      harry.save
+      movie = movies(:movie4)
+      mock_hash[:movie_id]= movie.id
       post check_out_path(mock_hash)
       body = JSON.parse(response.body)
 

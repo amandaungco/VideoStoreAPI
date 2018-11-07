@@ -115,24 +115,6 @@ describe Movie do
   end
 
   describe "custom methods" do
-    it "knows when it is available" do
-      expect(harry.available?).must_equal true
-      harry.available_inventory.times do
-        harry.check_out_movie
-      end
-      expect(harry.available?).must_equal false
-    end
-
-    it "can decrease its available inventory when it's checked out" do
-      starting_inventory = harry.available_inventory
-      harry.check_out_movie
-      expect(harry.available_inventory).must_equal starting_inventory - 1
-    end
-
-    it "can increases its available inventory when it's checked in" do
-      starting_inventory = harry.available_inventory
-      harry.check_in_movie
-      expect(harry.available_inventory).must_equal starting_inventory + 1
-    end
+  
   end
 end

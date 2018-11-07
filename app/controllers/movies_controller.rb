@@ -13,14 +13,14 @@ class MoviesController < ApplicationController
     },
       status: :not_found
     else
-      render json: @movie.as_json(except: [:created_at, :updated_at])
+      render json: @movie.as_json(methods: :available_inventory, except: [:created_at, :updated_at])
 
     end
   end
 
   def create
     movie = Movie.new(movie_params)
-    
+
     if movie.save
       render json: { id: movie.id }, status:  :ok
     else
