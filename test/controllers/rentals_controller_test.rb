@@ -14,7 +14,6 @@ describe RentalsController do
   describe "check_out" do
     it 'can create a new instance of rental given valid data' do
       starting_inventory = harry.available_inventory
-            binding.pry
       expect {
         post check_out_path(mock_hash)
       }.must_change 'Rental.count', 1
