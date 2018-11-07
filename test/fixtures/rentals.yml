@@ -5,6 +5,7 @@ rent1:
   customer: Amanda
   movie: movie1
   checkout_date: 2018-11-05
+  checkin_date: Thu, 01 Jan 0000
 
 rent2:
   due_date: 2018-11-05

@@ -8,7 +8,7 @@ class Movie < ApplicationRecord
   validates :inventory, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   def available_inventory
-    return (self.inventory) - (self.rentals.where(checkin_date: nil).length)
+    return (self.inventory) - (self.rentals.where(checkin_date: Date.new(0)).length)
   end
   # #
   # # def check_out_movie

@@ -14,10 +14,11 @@ describe RentalsController do
   describe "check_out" do
     it 'can create a new instance of rental given valid data' do
       starting_inventory = harry.available_inventory
+
       expect {
         post check_out_path(mock_hash)
       }.must_change 'Rental.count', 1
-
+      binding.pry
       harry.reload
       expect(harry.available_inventory).must_equal starting_inventory - 1
       body = JSON.parse(response.body)
@@ -91,5 +92,32 @@ describe RentalsController do
     #   #expect(body["errors"]).must_include :customer_id
     #   must_respond_with :bad_request
     # end
+  end
+
+  describe "Overdue"  do
+    it 'will sort with valid parameter' do
+      valid_sort = %w(title name checkout_date due_date)
+
+      valid_sort.each do |sortby|
+        get overdue_path, params: { sort: sortby }
+        body = JSON.parse(response.body)
+        new_list = Rental.all.sort_by{ |movie| movie[sortby] }
+        expect(body[0]["id"]).must_equal new_list[0].id
+        expect(body[-1]["id"]).must_equal new_list[-1].id
+        must_respond_with :success
+      end
+
+    end
+
+    it 'will not sort for invalid parameter' do
+      invalid_sort = %w(city dog nil)
+
+      invalid_sort.each do |sortby|
+        get overdue_path, params: { sort: sortby }
+        body = JSON.parse(response.body)
+        expect(body).must_include "errors"
+        must_respond_with :bad_request
+      end
+    end
   end
 end
