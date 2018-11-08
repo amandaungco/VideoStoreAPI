@@ -3,7 +3,11 @@ class Rental < ApplicationRecord
   belongs_to :customer
 
   before_create :set_default_to_checkin_date
-  
+
+
+
+
+
   private
 
   def set_default_to_checkin_date
