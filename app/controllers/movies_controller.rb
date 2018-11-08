@@ -1,21 +1,11 @@
 class MoviesController < ApplicationController
+  @@fields = [:id, :title, :release_date]
+  @@method = :available_inventory
+  @@sort_params = ['title', 'release_date']
+
   def index
     movies = Movie.all
-    if movie_params[:sort]
-      if ['title', 'release_date'].include?(movie_params[:sort])
-        movies = movies.sort_by{ |movie| movie[movie_params[:sort]] }
-        render json: movies.as_json( only: [:id, :title, :release_date])
-
-      else
-        render json: { errors: {
-          title: ["Movies cannot be sorted by #{movie_params[:sort]}"]
-        }
-      },
-      status: :bad_request
-      end
-    else
-      render json: movies.as_json( only: [:id, :title, :release_date])
-    end
+    sort(movies, movie_params[:sort], @@sort_params, @@fields)
   end
 
   def show

@@ -1,22 +1,11 @@
 class CustomersController < ApplicationController
+  @@fields = [:id, :name, :register, :postal_code, :phone, :registered_at]
+  @@method = :movies_checked_out_count
+  @@sort_params = ['name', 'registered_at', 'postal_code']
+
   def index
     customers = Customer.all
-    if customer_params[:sort]
-      if ['name', 'registered_at', 'postal_code'].include?(customer_params[:sort])
-        customers = customers.sort_by{ |customer| customer[customer_params[:sort]] }
-        render json: customers.as_json( only: [:id, :name, :register, :postal_code, :phone, :registered_at], methods: :movies_checked_out_count)
-
-      else
-        render json: { errors: {
-          title: ["Customers cannot be sorted by #{customer_params[:sort]}"]
-        }
-      },
-      status: :bad_request
-    end
-  else
-
-    render json: customers.as_json( only: [:id, :name, :register, :postal_code, :phone, :registered_at], methods: :movies_checked_out_count)
-  end
+    sort(customers, customer_params[:sort], @@sort_params, @@fields, method: @@method)
 end
 
 private

@@ -3,6 +3,9 @@ class RentalsController < ApplicationController
   before_action :find_customer
   before_action :find_rental, only: [:check_in]
 
+  @@fields =   [:id, :due_date, :checkout_date, :customer_id, :movie_id]
+  @@sort_params = ['title', 'name', 'checkout_date','due_date']
+
   def check_out
     if @movie.available?
       rental = Rental.new(rental_params)
@@ -50,22 +53,7 @@ class RentalsController < ApplicationController
 
   def overdue
     rentals = Rental.where("checkin_date = ? AND due_date < ?", Date.new(0), Date.today)
-    if rental_params[:sort]
-      if ['title', 'name', 'checkout_date','due_date'].include?(rental_params[:sort])
-        rentals = rentals.sort_by{ |rental| rental[rental_params[:sort]] }
-        render json: rentals.as_json( except: [:updated_at])
-
-      else
-        render json: {
-          errors: {
-          title: ["Overdue rentals cannot be sorted by #{rental_params[:sort]}"]
-        }
-      },
-      status: :bad_request
-      end
-    else
-    render json: rentals.as_json( except: [:updated_at])
-    end
+    sort(rentals, rental_params[:sort], @@sort_params, @@fields)
   end
 
 
