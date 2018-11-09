@@ -4,6 +4,7 @@ class Rental < ApplicationRecord
 
   before_create :set_default_to_checkin_date
 
+
   def title
     return self.movie.title
   end

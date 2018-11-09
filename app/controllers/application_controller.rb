@@ -4,8 +4,10 @@ class ApplicationController < ActionController::API
     # if :method
 
       if params
+
         if sort_params.include?(params)
-          list = list.order(params)
+          #list = list.order(params)
+          list = list.sort_by{ |unit| unit.send(params) }
           render json: list.as_json( only: fields , methods: method)
 
         else
