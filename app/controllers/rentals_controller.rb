@@ -5,6 +5,7 @@ class RentalsController < ApplicationController
 
   @@fields =   [:id, :due_date, :checkout_date, :customer_id, :movie_id]
   @@sort_params = ['title', 'name', 'checkout_date','due_date']
+  @@method = [:title, :name]
 
   def check_out
     if @movie.available?
@@ -29,8 +30,6 @@ class RentalsController < ApplicationController
   end
 
 
-
-
   def check_in
     if @rental.nil?
       render json:
@@ -53,7 +52,7 @@ class RentalsController < ApplicationController
 
   def overdue
     rentals = Rental.where("checkin_date = ? AND due_date < ?", Date.new(0), Date.today)
-    sort(rentals, rental_params[:sort], @@sort_params, @@fields)
+    sort(rentals, rental_params[:sort], @@sort_params, @@fields, method: @@method)
   end
 
 
